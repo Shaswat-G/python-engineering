@@ -32,3 +32,13 @@ Magic Methods:
 __magicmethod__ : THey have double underscores. Check on google how magic methods are commonly used. The object already inherits a bunvh of magic methods that we did not define as it inherits them.
 
 We can modify them.
+
+Creating Custom containers and operations on them
+Data structures are containers and lists, touples, dictionaries are sufficient ususlaly.
+But sometime we need to define our own custom.
+
+
+We can use a double underscore to any attribute in the calss to keep it private. This does not allow people to access these attributes externally.
+This is not for security, just a warning for developers to prevent accidental access of these private members. You can use the __dict__ method to get all the attributes of the object. Copy the name of the private attribute you want
+its usually prefized with an underscore followed by the classname and then the attribute name.
+Eg: object._ClassName__private_attribute.
