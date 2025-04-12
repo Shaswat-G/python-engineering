@@ -47,3 +47,26 @@ Instead of setting a private attribute in the class constructor, you can define 
 
 
 A very useful reference on magic methods: https://rszalski.github.io/magicmethods/
+
+
+
+Defining similar functions for different classes leads to code duplication (violation of the DRY principle). Any bug will need to be fixed everywhere else.
+And so we use inheritance.
+
+We define a common (more abstract class) that has the common function and inherit that in different classes. Ag: An animal class for mammal and fish classes.
+After inheriting, the child class inherits all  functions and attributes form the paretn class. Isinstance shows true for all parents, grandparents etc. You can also use issublcass and isinstance methods.
+
+Defining a oonstructor in the base class will override the constructor of the parent class. This is called method overloading. You need to use the super() function to call the initalizer of the parent class (or super class)
+
+Super() in general can be used to call any method of the parent class. The order of calling the constructors can be changed bu changing the order of calling the constructor inside the base class.
+
+
+
+## Multilevel Inheritance.
+
+You can go as abstract and as granular as you want. But, the goal of writing software is to solve a problem, and we should restrict ourselves to 1-2 inheritance levels. Anything beyond that is firstly not needed, secondly adds unnecessary complexity in the code. Just because there can be a hierarchy defined, doesn't mean you should replicate it in code.
+[expand on certain real world examples and issues here]
+
+
+## Multiple Inheritance:
+A child class inherits from multiple parent classes. The parent calsses may have the same methods -> python interpreter first tries to find the method in the child class, if not then moves to the first parent class, then the second and so on. Multiple inheritaance is useful, but you have to be careful that the parents and child class shuold not have things (methods) in common.
