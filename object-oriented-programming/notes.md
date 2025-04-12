@@ -42,3 +42,8 @@ We can use a double underscore to any attribute in the calss to keep it private.
 This is not for security, just a warning for developers to prevent accidental access of these private members. You can use the __dict__ method to get all the attributes of the object. Copy the name of the private attribute you want
 its usually prefized with an underscore followed by the classname and then the attribute name.
 Eg: object._ClassName__private_attribute.
+
+Instead of setting a private attribute in the class constructor, you can define a set_attribute(self, value): function that is called from within the constructore body and has the necessary checks.
+
+
+A very useful reference on magic methods: https://rszalski.github.io/magicmethods/
