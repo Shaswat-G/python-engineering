@@ -39,3 +39,22 @@ or from ecommerce.shopping import sales and then call sales.fincA
 exommerce is the package, shopping is the subpackage and sales is the module.
 
 We can use absolut (best practicve) or relative improts to import finctionality from differently nested sub-subspackaeges etc. this is called intra package references.
+
+
+The dir function.
+used to debug in complicated projects.
+
+You can print dir(sales) and get a list of all the methdos and attributes of the object, along iwht magic methods. __name__, __package__, __file__  hepful
+
+
+Executing modules as scripts:
+
+The statements that we write in our modules will be executed at the first instance you import this module. After that python will cache it in memeory and ebery other import of the sam e module will not execute those statemetns.
+
+You can write a satement in the package __init__.py script, that is the first thing to be executed. then stetament in hte modiule will be executed.
+
+if we have a rint statme nt iwth __name__, it will refer to the packahge.module location thing when imported, but if you run the module, it will output __main__.
+This is because the __main__ module always starts are program.
+
+WOW. So now we can add if __name__ == "__main__" in the module and use the code below it as a script and allow its functionality to be imported elsewhere! so nice.
+Thjis code will never be run if this file is loade by another module or script that imports it as main is not the one doinf the impoting.
