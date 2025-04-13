@@ -83,3 +83,19 @@ Lets say you create an abstract base calss with a function decorates with the as
 
 Ducktyping:
 Python is a dynamically typed class. The existence of an abstract class just enforces a rule. EVen if you do not define a common behavior in the abstract class and do not inherit from that class, just simpley have the common behaviour (without that rule), we can achieve the polymorphic behavior. This is called ducktypeing - if it talks like a ducka dn walsk like a duck, it is a duck.
+
+
+Extending builtin types.
+class Text(str):
+and can now add multiple things on it - mehtod slike duplicate.
+class TrackableList(list):
+overwrite the append method for logging say.
+
+
+Dataclasses
+We can use calsses to bundle data and funcitonality together. For classes that have no methods but only deal with data, you will have to define __eq__ magic methods among others for ordering, but this is a bit tedious. You can use a named touple instance. from collections import namedtuple.
+Eg: Point = namedtuple("Point", ["x", "y"])
+pa = Point(x=1,y=2)
+pb = Point(x=3,y=4)
+
+In this case, you can directly check for equality if all atteibutes are the same. However, you cannot change the attributes of the namedtuple after it is created.
