@@ -53,6 +53,6 @@ print(str(origin))  # Output: (0, 0)
 print(point == origin)  # Output: False
 print(point > origin)  # Output: True
 print(point < origin)  # Output: False  Python uses the __lt__ method to define the behavior of <
-print(point != origin)  # Output: True  Python automaticallyunderstands what != meands after defining lt
+print(point != origin)  # Output: True  Python automatically understands what != means after defining lt
 
 print(point + origin)  # Output: (1, 2)  Python automatically
