@@ -70,3 +70,16 @@ You can go as abstract and as granular as you want. But, the goal of writing sof
 
 ## Multiple Inheritance:
 A child class inherits from multiple parent classes. The parent calsses may have the same methods -> python interpreter first tries to find the method in the child class, if not then moves to the first parent class, then the second and so on. Multiple inheritaance is useful, but you have to be careful that the parents and child class shuold not have things (methods) in common.
+
+You can also inherit from existing calsses in python. FOr Eg: you can inherit from the exceptions class in python to define your own exceptions.
+
+Sometimes exposing the mehtods of the parent class is not good. When you derive several calsses from a common parent calss,
+say File and Network streams from a class called stream with an open and close method, this can be done by designing an abstract base class, this allows for having a common contract across its derivatives. We cannot create an instance of the abstract class.
+This can be done by from abc import ABC, abstractmethod (decorator)
+The abstraactmethod decoratoe tells that htese methods have to be implemented in the derivative calss, or else it will also be treated like an abstract class.
+
+Polymorphism: Many forms.
+Lets say you create an abstract base calss with a function decorates with the asbstract decorator . All its derivate classes have to implement this metods. you can create a function outside all theses clases which can call these abstract decoreated functions with any of the instacnes of the derivateve class. Whic funciton is actually called is dtermined at runtime when the actual object calls. it.
+
+Ducktyping:
+Python is a dynamically typed class. The existence of an abstract class just enforces a rule. EVen if you do not define a common behavior in the abstract class and do not inherit from that class, just simpley have the common behaviour (without that rule), we can achieve the polymorphic behavior. This is called ducktypeing - if it talks like a ducka dn walsk like a duck, it is a duck.
