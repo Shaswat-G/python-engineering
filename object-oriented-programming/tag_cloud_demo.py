@@ -4,7 +4,7 @@ class TagCloud:
         
     def add(self, tag):
         tag = tag.strip().lower()  # Normalize the tag to lowercase and remove leading/trailing spaces
-        if tag in self.__tags:   # alternative : self.tags[tag] = slef.tags.get(tag, 0) + 1
+        if tag in self.__tags:   # alternative : self.tags[tag] = self.tags.get(tag, 0) + 1
             self.__tags[tag] += 1
         else:
             self.__tags[tag] = 1
