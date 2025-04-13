@@ -21,3 +21,21 @@ Yoiu can either also import the entire module as an object : import script_name 
 
 You will __pycache__ which contains the compiled version of the modules that you are importing. These are .pyc file (c python, remember?). This is Python Byte Code.
 This only speeds up imports and does not actually improve the rruntime performance of tyour application. They are refreshed everytime you make a chaneg in the module.
+
+You can see the path vairable by import sys and then doing print(sys.path)
+
+Since we create many modules in a project having them in the same directory will complicate things -> 20+ modules say.
+Its better to organize modules into subfolder and package them into a package.
+A files is mapped to a module and a subfolder (wchih contains multiple modules) is mapped to a package.
+To instruct the python interpreter to see a subfolder as a package of modules, you have to include hte __inti__.py script in the same folder.
+This is where you can define the behavior of import * etc.
+
+You can break an exsiitng package into subpackages by creating a subfolder and including a __init__.py script in that subfolder.
+While importing you can jsut use the . operator. 
+Eg: 
+from ecommerce.shopping.sales import funcA
+or from ecommerce.shopping import sales and then call sales.fincA
+
+exommerce is the package, shopping is the subpackage and sales is the module.
+
+We can use absolut (best practicve) or relative improts to import finctionality from differently nested sub-subspackaeges etc. this is called intra package references.
