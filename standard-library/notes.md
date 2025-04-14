@@ -425,3 +425,215 @@ except sqlite3.Error as e:
 ---
 
 SQLite provides a robust, simple, yet powerful way to handle data storage and retrieval in Python-based applications.
+
+
+# Python Development Utilities Cheat Sheet
+
+---
+
+## Time Handling in Python
+
+### Modules:
+- `time`
+- `datetime`
+- `pandas.to_datetime`
+- `timeit`
+- `perf_counter`
+
+### `time` module
+```python
+import time
+
+time.sleep(2)  # Pause for 2 seconds
+time.time()    # Epoch timestamp
+```
+
+### `datetime` module
+```python
+from datetime import datetime, timedelta
+
+now = datetime.now()
+future = now + timedelta(days=5)
+past = now - timedelta(hours=3)
+
+# Formatting and parsing
+formatted = now.strftime("%Y-%m-%d %H:%M:%S")
+parsed = datetime.strptime("2025-04-14", "%Y-%m-%d")
+```
+
+### `pandas.to_datetime`
+```python
+import pandas as pd
+
+series = pd.Series(['2024-01-01', '2025-04-14'])
+dates = pd.to_datetime(series)
+```
+
+### High-precision timing
+```python
+from time import perf_counter
+
+start = perf_counter()
+# some operation
+end = perf_counter()
+print(f"Elapsed: {end - start:.4f} seconds")
+```
+
+---
+
+## Randomness and Seeding
+
+### Standard library: `random`
+```python
+import random
+
+random.seed(42)
+random.randint(1, 100)
+random.random()
+random.choice(['a', 'b', 'c'])
+data = list(range(10))
+random.shuffle(data)
+```
+
+### Numpy randomness
+```python
+import numpy as np
+
+np.random.seed(42)
+np.random.randint(0, 10, size=5)
+np.random.rand(3, 2)
+np.random.choice([10, 20, 30], size=2)
+```
+
+### Torch randomness
+```python
+import torch
+
+torch.manual_seed(42)
+torch.rand(2, 3)
+```
+
+### Pandas randomness
+```python
+df = pd.DataFrame({'x': range(10)})
+df.sample(3, random_state=42)
+```
+
+### Monte Carlo Simulation Example
+```python
+import random
+
+inside = 0
+n = 10000
+for _ in range(n):
+    x, y = random.random(), random.random()
+    if x**2 + y**2 <= 1:
+        inside += 1
+
+pi_estimate = 4 * inside / n
+print("Estimated π:", pi_estimate)
+```
+
+---
+
+## Templating with `string.Template`
+
+```python
+from string import Template
+
+email_template = Template("""
+Hello $name,
+
+Your order #$order_id has been shipped to $address.
+
+Thank you!
+""")
+
+message = email_template.substitute({
+    'name': 'Alice',
+    'order_id': '12345',
+    'address': 'Zurich, Switzerland'
+})
+
+print(message)
+```
+
+Useful for:
+- LLM prompt engineering
+- Emails
+- Log templates
+- Config text blocks
+
+---
+
+## Configuration Management
+
+### JSON configs
+```python
+import json
+
+with open('config.json') as f:
+    config = json.load(f)
+```
+
+### XML configs (using ElementTree)
+```python
+import xml.etree.ElementTree as ET
+
+tree = ET.parse('config.xml')
+root = tree.getroot()
+for child in root:
+    print(child.tag, child.text)
+```
+
+### Argparse for CLI configuration
+```python
+import argparse
+
+parser = argparse.ArgumentParser(description="Demo script")
+parser.add_argument('--config', type=str, help="Path to config.json")
+parser.add_argument('--epochs', type=int, default=10)
+args = parser.parse_args()
+
+# Load user config
+with open(args.config) as f:
+    user_config = json.load(f)
+
+print("Running for", args.epochs, "epochs")
+```
+
+---
+
+## Calling External Programs
+
+### Basic `subprocess.run`
+```python
+import subprocess
+
+result = subprocess.run(["ls", "-haltz"], capture_output=True, text=True)
+print("STDOUT:", result.stdout)
+print("STDERR:", result.stderr)
+print("Exit Code:", result.returncode)
+```
+
+### Running Python script or shell commands
+```python
+subprocess.run(["python", "script.py"])
+subprocess.run(["echo", "Hello, World!"])
+```
+
+You can also use:
+```python
+completed = subprocess.run(["ls", "-l"], capture_output=True, text=True)
+print(completed.stdout)
+```
+
+Use subprocess for:
+- Invoking scripts
+- Chaining external tools
+- Compiling or testing pipelines
+- Shell automation
+
+---
+
+Each of these utilities enriches your ability to write modular, production-ready Python applications that are reproducible, testable, and configurable.
