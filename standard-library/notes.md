@@ -110,3 +110,184 @@ print(os.environ.items())             # All key-value pairs
 - Manage project environments (e.g., `VIRTUAL_ENV`, `PATH`)
 
 ---
+
+# File and Data Handling Cheat Sheet
+
+---
+
+## Working with ZIP Files
+
+ZIP archives are commonly used for compressing multiple files and directories.
+
+**Basic Operations:**
+```python
+from zipfile import ZipFile
+
+# Reading a zip file
+with ZipFile('file.zip', 'r') as zip:
+    print(zip.namelist())  # List files
+    zip.extractall('output_directory')  # Extract all files
+    info = zip.getinfo('specific_file.txt')  # Get file metadata
+
+# Writing a zip file
+with ZipFile('file.zip', 'w') as zip:
+    zip.write('file.txt')  # Add files
+```
+
+---
+
+## Working with CSV Files
+
+CSV (Comma Separated Values) files are simple, widely-used formats for tabular data.
+
+### Using Python's built-in CSV module:
+```python
+import csv
+
+# Writing to a CSV
+with open('data.csv', 'w', newline='') as file:
+    writer = csv.writer(file)
+    writer.writerow(['Name', 'Age', 'City'])  # Write header
+    writer.writerow(['Alice', 30, 'London'])  # Write data
+
+# Reading from a CSV
+with open('data.csv', 'r') as file:
+    reader = csv.reader(file)
+    for row in reader:
+        print(row)
+```
+
+### Using Pandas (recommended for larger datasets):
+```python
+import pandas as pd
+
+# Reading CSV
+df = pd.read_csv('data.csv')
+
+# Writing CSV
+df.to_csv('output.csv', index=False)
+```
+
+---
+
+## Working with JSON Files
+
+JSON (JavaScript Object Notation) is the standard for data exchange, especially with APIs and configuration files.
+
+```python
+import json
+
+# Reading JSON
+with open('data.json', 'r') as file:
+    data = json.load(file)
+
+# Writing JSON
+with open('data.json', 'w') as file:
+    json.dump(data, file, indent=4)
+
+# JSON to string (serialization)
+json_string = json.dumps(data, indent=4)
+
+# String to JSON (deserialization)
+data = json.loads(json_string)
+
+# Safe access using .get()
+name = data.get('name', 'Default Name')
+```
+
+**Error Handling:**
+```python
+try:
+    data = json.loads(invalid_json_string)
+except json.JSONDecodeError as e:
+    print(f"Invalid JSON: {e}")
+```
+
+---
+
+## Working with XML Files
+
+XML is often used for data interchange in complex hierarchical structures.
+
+### Using ElementTree (built-in):
+```python
+import xml.etree.ElementTree as ET
+
+# Parsing XML
+root = ET.parse('file.xml').getroot()
+
+# Traversing XML
+data = []
+for child in root.findall('element'):
+    item = child.find('sub_element').text
+    data.append(item)
+
+# Creating XML
+data = ET.Element('data')
+item = ET.SubElement(data, 'item')
+item.text = 'Value'
+
+# Writing XML
+ET.ElementTree(data).write('output.xml', encoding='utf-8', xml_declaration=True)
+```
+
+---
+
+## Working with YAML Files
+
+YAML (YAML Ain't Markup Language) is commonly used for human-readable configuration files.
+
+### Using PyYAML (Third-party library):
+Install with `pip install pyyaml`:
+
+```python
+import yaml
+
+# Reading YAML
+with open('config.yml', 'r') as file:
+    config = yaml.safe_load(file)
+
+# Writing YAML
+with open('config.yml', 'w') as file:
+    yaml.dump(config, file)
+```
+
+---
+
+## Working with Excel (XLSX) Files
+
+Excel files are standard in business and data analytics.
+
+### Using Pandas (recommended):
+Install dependencies with `pip install openpyxl pandas`:
+
+```python
+import pandas as pd
+
+# Reading Excel
+df = pd.read_excel('data.xlsx', sheet_name='Sheet1')
+
+# Writing Excel
+df.to_excel('output.xlsx', sheet_name='Results', index=False)
+```
+
+### Using openpyxl for advanced control:
+```python
+from openpyxl import Workbook, load_workbook
+
+# Writing to Excel
+wb = Workbook()
+sheet = wb.active
+sheet.title = "Data"
+sheet.append(['Name', 'Age', 'City'])
+sheet.append(['Bob', 25, 'Paris'])
+wb.save('output.xlsx')
+
+# Reading from Excel
+wb = load_workbook('data.xlsx')
+sheet = wb['Sheet1']
+for row in sheet.iter_rows(values_only=True):
+    print(row)
+```
+
+---
