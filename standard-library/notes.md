@@ -291,3 +291,137 @@ for row in sheet.iter_rows(values_only=True):
 ```
 
 ---
+
+# SQLite Databases with Python
+
+SQLite is ideal for lightweight applications, particularly on mobile devices and embedded systems. It offers a self-contained, serverless, zero-configuration SQL database engine.
+
+## Setup
+
+Download a GUI tool for exploring SQLite databases from [DB Browser for SQLite](https://sqlitebrowser.org/).
+
+---
+
+## Connecting to a Database
+
+```python
+import sqlite3
+
+# Establish a connection
+with sqlite3.connect("db.sqlite3") as connection:
+    cursor = connection.cursor()
+```
+
+---
+
+## Creating Tables
+
+```python
+with sqlite3.connect("db.sqlite3") as connection:
+    connection.execute('''CREATE TABLE IF NOT EXISTS Movies
+                          (id INTEGER PRIMARY KEY, title TEXT, year INTEGER)''')
+    connection.commit()
+```
+
+---
+
+## Inserting Data
+
+Use parameterized queries (`?`) to avoid SQL injection:
+
+```python
+movies = [
+    {'id': 1, 'title': 'Inception', 'year': 2010},
+    {'id': 2, 'title': 'Interstellar', 'year': 2014}
+]
+
+with sqlite3.connect("db.sqlite3") as connection:
+    command = "INSERT INTO Movies VALUES (?, ?, ?)"
+    for movie in movies:
+        connection.execute(command, tuple(movie.values()))
+    connection.commit()
+```
+
+- `commit()` saves your changes permanently to the database.
+
+---
+
+## Querying Data
+
+Fetch data using `fetchone()`, `fetchmany()`, and `fetchall()`:
+
+```python
+with sqlite3.connect("db.sqlite3") as connection:
+    cursor = connection.cursor()
+    cursor.execute("SELECT * FROM Movies")
+
+    # Fetch all records
+    records = cursor.fetchall()
+    for record in records:
+        print(record)
+
+    # Fetch one record
+    cursor.execute("SELECT * FROM Movies WHERE id=?", (1,))
+    movie = cursor.fetchone()
+    print(movie)
+```
+
+---
+
+## Updating Data
+
+```python
+with sqlite3.connect("db.sqlite3") as connection:
+    connection.execute("UPDATE Movies SET year = ? WHERE id = ?", (2022, 1))
+    connection.commit()
+```
+
+---
+
+## Deleting Data
+
+```python
+with sqlite3.connect("db.sqlite3") as connection:
+    connection.execute("DELETE FROM Movies WHERE id = ?", (2,))
+    connection.commit()
+```
+
+---
+
+## Advanced Features
+
+### Transaction Handling
+```python
+with sqlite3.connect("db.sqlite3") as connection:
+    try:
+        connection.execute("INSERT INTO Movies VALUES (?, ?, ?)", (3, 'Dunkirk', 2017))
+        connection.commit()
+    except sqlite3.Error as e:
+        connection.rollback()
+        print(f"Transaction failed: {e}")
+```
+
+### Using Context Managers
+SQLite connections and cursors are best handled with context managers (`with`) to ensure proper cleanup:
+
+```python
+with sqlite3.connect("db.sqlite3") as conn:
+    with conn:
+        conn.execute("INSERT INTO Movies VALUES (?, ?, ?)", (4, 'Tenet', 2020))
+```
+
+---
+
+## Handling SQLite Errors
+
+```python
+try:
+    with sqlite3.connect("db.sqlite3") as connection:
+        connection.execute("INVALID SQL")
+except sqlite3.Error as e:
+    print(f"SQLite error: {e}")
+```
+
+---
+
+SQLite provides a robust, simple, yet powerful way to handle data storage and retrieval in Python-based applications.
