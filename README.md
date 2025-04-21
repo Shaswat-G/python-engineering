@@ -1,7 +1,3 @@
-Here's your cleaned-up, non-redundant, and elegantly formatted **Markdown version** of the course content:
-
----
-
 # 🐍 Python Engineering Mastery  
 *A comprehensive, engineering-focused Python course for students and professional developers*
 
