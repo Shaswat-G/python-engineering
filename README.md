@@ -1,3 +1,4 @@
+[![Code of Conduct](https://img.shields.io/badge/Code%20of%20Conduct-Active-brightgreen.svg)](.github/CODE_OF_CONDUCT.md) [![Contributing](https://img.shields.io/badge/Contributions-Welcome-blue.svg)](.github/CONTRIBUTING.md)
 # 🐍 Python Engineering Mastery  
 *A comprehensive, engineering-focused Python course for students and professional developers*
 
