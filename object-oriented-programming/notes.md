@@ -329,6 +329,106 @@ account.balance = -50       # Balance cannot be negative!
   print(mary.skin_color)  # tan
   ```
 
+### Class Methods
+
+- **Class methods** operate on the class itself, not on instances.
+- Defined with the `@classmethod` decorator and take `cls` as the first parameter.
+- Used to modify class attributes or create alternative constructors.
+
+```python
+class Superhero:
+    training_level = 1  # Class attribute
+
+    def __init__(self, name: str, power: str):
+        self.name = name         # Instance attribute
+        self.power = power       # Instance attribute
+
+    @classmethod
+    def upgrade_training(cls) -> None:
+        cls.training_level += 1
+        print(f"All heroes now at training level {cls.training_level}")
+
+Superhero.upgrade_training()     # Recommended
+print(Superhero.training_level)  # 2
+
+iron_man = Superhero("Iron Man", "Flying")
+iron_man.upgrade_training()      # Works, but not recommended
+print(iron_man.training_level)   # 3
+```
+
+- **Use Case**: Modify class-level data, alternative constructors, or factory methods.
+
+#### Challenge Example
+
+```python
+class Library:
+    books_available = 100
+
+    @classmethod
+    def lend_books(cls, number):
+        cls.books_available -= number
+
+    @classmethod
+    def return_books(cls, number):
+        cls.books_available += number
+
+print(f"Initial status: {Library.books_available} books available")
+Library.lend_books(30)
+print(f"After lending: {Library.books_available} books available")
+Library.return_books(10)
+print(f"After return: {Library.books_available} books available")
+```
+
+---
+
+### Static Methods
+
+- **Static methods** are utility functions inside a class that do not access instance (`self`) or class (`cls`) data.
+- Defined with the `@staticmethod` decorator.
+- Used for logic related to the class, but not dependent on class or instance state.
+
+```python
+class Superhero:
+    def __init__(self, name: str, power: str):
+        if not self.is_valid_power(power):
+            raise ValueError(f"Invalid power: {power}")
+        self.name = name
+        self.power = power
+
+    @staticmethod
+    def is_valid_power(power: str) -> bool:
+        valid_powers = ['Flying', 'Strength', 'Speed', 'Intelligence']
+        return power in valid_powers
+
+print(Superhero.is_valid_power('Flying'))         # True
+print(Superhero.is_valid_power('Mind Reading'))   # False
+
+iron_man = Superhero("Iron Man", "Flying")        # Works
+# mind_reader = Superhero("Hero", "Mind Reading") # Raises ValueError
+```
+
+- **Use Case**: Utility functions, validation, or helpers that conceptually belong to the class.
+
+#### Challenge Example
+
+```python
+class CurrencyConverter:
+    rates = {
+        'EUR': 1.2,   # 1 EUR = 1.2 USD
+        'JPY': 0.01,  # 1 JPY = 0.01 USD
+        'USD': 1.0
+    }
+
+    @staticmethod
+    def to_usd(amount, currency):
+        return amount * CurrencyConverter.rates[currency]
+
+print(f"100 EUR = {CurrencyConverter.to_usd(100, 'EUR')} USD")
+print(f"100 JPY = {CurrencyConverter.to_usd(100, 'JPY')} USD")
+```
+
+---
+
 ## Methods
 
 - Instance methods have `self` as their first argument.
