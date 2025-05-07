@@ -187,6 +187,126 @@ print(pm.verify_password("wrong"))      # False
 
 > **Note:** Python relies on conventions for access control ("we're all consenting adults here"). These are not enforced by the language, but following them helps maintain code clarity and safety.
 
+---
+
+### Getter and Setter Methods, Validation, and the `@property` Decorator
+
+#### Why Use Getters and Setters?
+
+- **Encapsulation**: Control access to private/protected attributes.
+- **Validation**: Ensure only valid data is set.
+- **Flexibility**: Change internal implementation without affecting external code.
+
+#### Classic Getter and Setter Methods
+
+```python
+class SuperHero:
+    def __init__(self, name: str, power_level: int):
+        self.__name = name
+        self.__power_level = power_level
+
+    def get_power_level(self) -> int:      # Getter
+        return self.__power_level
+
+    def set_power_level(self, new_level: int) -> None:  # Setter with validation
+        if 0 <= new_level <= 100:
+            self.__power_level = new_level
+        else:
+            print("Power level must be between 0 and 100!")
+
+hero = SuperHero("Thor", 80)
+print(hero.get_power_level())   # 80
+hero.set_power_level(90)        # OK
+hero.set_power_level(150)       # Error: Power level must be between 0 and 100!
+```
+
+#### Typical Use Cases
+
+- Sensitive data (e.g., passwords, balances)
+- Attributes requiring validation (e.g., age, scores)
+- Read-only or computed properties
+
+#### Challenge Example
+
+```python
+class BankAccount:
+    def __init__(self, balance):
+        self.__balance = balance  # private attribute
+
+    def get_balance(self) -> int:
+        return self.__balance
+
+    def set_balance(self, new_balance: int) -> None:
+        if new_balance >= 0:
+            self.__balance = new_balance
+        else:
+            print("Cannot set negative balance!")
+
+account = BankAccount(1000)
+print(account.get_balance())    # 1000
+account.set_balance(-50)        # Cannot set negative balance!
+print(account.get_balance())    # 1000
+account.set_balance(100)
+print(account.get_balance())    # 100
+```
+
+#### Pythonic Approach: `@property` and Setter Decorators
+
+Python provides a cleaner, more idiomatic way to define getters and setters using the `@property` and `@<property>.setter` decorators.
+
+```python
+class Hero:
+    def __init__(self, name: str):
+        self.__name = name    # private attribute
+
+    @property
+    def name(self) -> str:    # Getter
+        return self.__name
+
+    @name.setter
+    def name(self, new_name: str) -> None:  # Setter with validation
+        if new_name:
+            self.__name = new_name
+        else:
+            print("Name cannot be empty!")
+
+hero = Hero("Batman")
+print(hero.name)        # Batman (calls getter)
+hero.name = "Superman"  # OK (calls setter)
+hero.name = ""          # Name cannot be empty!
+```
+
+- **Advantages**:
+  - Attribute access syntax (`obj.name`) with validation/control.
+  - Cleaner and more Pythonic than explicit get/set methods.
+
+#### Challenge: Use `@property` for BankAccount
+
+```python
+class BankAccount:
+    def __init__(self, balance):
+        self.__balance = balance
+
+    @property
+    def balance(self):
+        return self.__balance
+
+    @balance.setter
+    def balance(self, new_balance):
+        if new_balance >= 0:
+            self.__balance = new_balance
+        else:
+            print("Balance cannot be negative!")
+
+account = BankAccount(1000)
+print(account.balance)      # 1000
+account.balance = -50       # Balance cannot be negative!
+```
+
+> **Tip:** Use `@property` for attributes that need validation or computed values, but should be accessed like regular attributes.
+
+---
+
 ### Class vs. Instance Attributes
 
 - **Class Attributes**: Common to all instances (e.g., humans have `1 head`).
