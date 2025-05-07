@@ -1,7 +1,3 @@
-Here’s a clean, structured, and pedagogically sound **Markdown guide** covering everything you requested about functions — from purpose to syntax, parameters, scope, and debugging. It’s concise, readable, and ideal for reference or learning.
-
----
-
 # 🧠 Python Functions: The Art of Reusability
 
 ## 🔹 Why Use Functions?
