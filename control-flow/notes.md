@@ -14,6 +14,15 @@
 11. Avoid using single trailing underscores unless you are following a specific naming convention (like `var_` to avoid name conflicts).
 12. Avoid using double trailing underscores unless you are defining a special method or variable (like `__str__` for string representation).
 
+
+## Keywords
+- **Keywords** are reserved words in Python that have special meaning and cannot be used as variable names. Examples include `if`, `else`, `for`, `while`, `def`, `class`, `import`, etc.
+- You can check the list of keywords using the `keyword` module:
+```python
+import keyword
+print(keyword.kwlist)  # Prints all keywords in Python
+```
+
 ## 🔹 Comparison Operators
 
 Used to evaluate relationships between values. Result is always a `bool` (`True` or `False`).
