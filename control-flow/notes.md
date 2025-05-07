@@ -1,8 +1,18 @@
-Here’s a clean, expanded, and **operational** markdown version of your next block of notes, covering comparisons, control flow, and iteration — all distilled for clarity and utility:
+# Python Control Flow & Comparisons
 
----
-
-# ⚙️ Python Control Flow & Comparisons
+## Variable Names
+1. Must start with a letter or underscore (`_`). No numbers or spaces at the start.
+2. Can contain letters, numbers, and underscores.
+3. Case-sensitive: `myVar` and `myvar` are different.
+4. Avoid using Python keywords (like `if`, `else`, `for`, etc.) as variable names.
+5. Use descriptive names for readability (e.g., `user_age` instead of `x`).
+6. Use underscores (`_`) to separate words in variable names (e.g., `first_name` instead of `firstname`).
+7. Follow the **PEP 8** style guide for naming conventions. We use `snake_case` for variable names and `CamelCase` for class names.
+8. Avoid using single leading or trailing underscores unless you are defining a special method or variable (like `__init__` for constructors).
+9. Avoid using double leading underscores unless you are defining a class attribute that should not be accessed directly (like `__private_var`).
+10. Avoid using single leading underscores for public attributes unless you are following a specific naming convention (like `_private_var` for protected attributes).
+11. Avoid using single trailing underscores unless you are following a specific naming convention (like `var_` to avoid name conflicts).
+12. Avoid using double trailing underscores unless you are defining a special method or variable (like `__str__` for string representation).
 
 ## 🔹 Comparison Operators
 
