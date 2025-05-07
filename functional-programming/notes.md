@@ -65,6 +65,14 @@ def add(a, b):
 
 ---
 
+## 🔹 Type Hints
+Type hints are optional annotations that specify the expected types of parameters and return values.
+
+```python
+# Example of type hints
+def add(a: int, b: int) -> int:
+    return a + b
+```
 ## 🔹 Positional vs Keyword Arguments
 
 ```python
