@@ -16,6 +16,8 @@ Here’s a clean, well-structured, and elegant markdown version of your notes, e
 
 ---
 
+Python is an interpreted language, meaning it executes code line-by-line at runtime. This allows for rapid development and debugging but can lead to slower performance compared to compiled languages like C or Java.
+
 ## Core Concepts
 
 ### Expression
@@ -32,6 +34,11 @@ print("Valid syntax")
 # print("Missing closing quote -> SyntaxError
 ```
 
+## Errors
+Errors broadly fall into three categories:
+- **Syntax Errors**: Issues with the code structure (e.g., missing parentheses, incorrect indentation).
+- **Runtime Errors**: Occur during execution (e.g., division by zero, accessing a non-existent variable).
+- **Logical Errors**: The code runs but produces incorrect results (e.g., wrong calculations, infinite loops).
 ---
 
 ## Editors vs IDEs
