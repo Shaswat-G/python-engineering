@@ -579,3 +579,164 @@ p = Point(x=1, y=2)
 ```
 
 Immutable: attributes cannot change post-creation.
+
+---
+
+## Abstraction
+
+Abstraction is the concept of hiding complex implementation details and exposing only the necessary features. Think of a TV remote: you use buttons to change channels, not caring about the electronics inside.
+
+### Data Abstraction
+
+- Hides complex data details.
+- Achieved in Python via private variables.
+
+### Behavioral Abstraction
+
+- Hides complex method implementations.
+- Achieved in Python via abstract methods.
+
+**Example:**
+
+```python
+class TempConverter:
+    def __init__(self, celsius):
+        self._celsius = celsius    # Hidden internal state
+
+    def get_fahrenheit(self) -> float:
+        return (self._celsius * 9/5) + 32
+
+temp = TempConverter(25)
+print(temp.get_fahrenheit())  # 77.0
+```
+
+- `get_fahrenheit` abstracts away the conversion logic.
+- `_celsius` is hidden from users.
+- Users don't need to know the formula.
+
+#### Challenge
+
+Given the code for `Superhero` below, create an abstraction for the `fly()` method. The user should only know that the superhero can fly, not how. Internally, `fly()` should check if the superhero has enough power (at least 20), reduce power by 20 and return `"Up up and away!"`. If not enough power, return `"Too tired to fly..."`.
+
+**Expected Output:**
+
+```
+Up up and away!
+Up up and away!
+Too tired to fly...
+```
+
+---
+
+### Abstraction vs Encapsulation
+
+- **Abstraction**: Hides complexity, focuses on _what_ an object does (e.g., `get_fahrenheit()` lets you convert temperature without knowing the formula).
+- **Encapsulation**: Protects data, focuses on _how_ data is accessed/modified (e.g., `_celsius` is private, accessed via methods).
+
+| Concept       | Focus | Example (TempConverter)         | Purpose                        |
+| ------------- | ----- | ------------------------------- | ------------------------------ |
+| Abstraction   | What  | `get_fahrenheit()`              | Simplify usage                 |
+| Encapsulation | How   | `_celsius` private, via methods | Data hiding, controlled access |
+
+---
+
+## Abstract Method and Class
+
+- **Abstract method**: Declared in a base class, no implementation. Subclasses must implement it.
+- **Abstract class**: Contains one or more abstract methods. Cannot be instantiated.
+
+**Example:**
+
+```python
+from abc import ABC, abstractmethod
+
+class Superhero(ABC):
+    def __init__(self, name):
+        self._name = name
+
+    def get_name(self) -> str:
+        return self._name
+
+    @abstractmethod
+    def fly(self) -> str:
+        pass
+
+class Superman(Superhero):
+    def fly(self) -> str:
+        return "Up up and away!"
+```
+
+- `Superhero` is an abstract class (inherits from `ABC`).
+- `fly()` is an abstract method (decorated with `@abstractmethod`).
+- Subclasses must implement `fly()`.
+- Cannot instantiate `Superhero` directly.
+
+**Why use abstract methods?**
+
+- Hide implementation details (abstraction).
+- Enforce consistency: subclasses must implement required methods.
+- Prevent incomplete objects: can't instantiate classes with unimplemented abstract methods.
+
+#### Challenge
+
+Implement a payment card system using abstract classes.
+
+- Make `PaymentCard` abstract.
+- Add abstract method `process_payment(amount: float) -> str`.
+- `DebitCard`: subtracts amount from balance if enough funds, else "Insufficient funds".
+- `CreditCard`: always approves payment (negative balance allowed).
+
+**Expected Output:**
+
+```
+Payment successful
+50.0
+Insufficient funds
+50.0
+Payment successful
+50.0
+Payment successful
+-50.0
+```
+
+---
+
+## Interface
+
+An interface in Python is a pure abstract class: it contains only abstract methods (no implementation). It defines a contract for subclasses.
+
+```python
+from abc import ABC, abstractmethod
+
+class Database(ABC):
+    @abstractmethod
+    def connect(self) -> bool:
+        pass
+
+    @abstractmethod
+    def query(self, sql: str) -> list:
+        pass
+```
+
+- All methods are abstract.
+- No constructor or concrete methods.
+
+**Interfaces vs Abstract Classes:**
+
+|              | Abstract Class       | Interface (Pure Abstract Class) |
+| ------------ | -------------------- | ------------------------------- |
+| Methods      | Abstract + concrete  | Only abstract                   |
+| Constructors | Allowed              | Not recommended                 |
+| Purpose      | Blueprint + contract | Contract only                   |
+
+#### Challenge: Create a Superhero Interface
+
+- Define a `Superhero` interface with abstract methods `fly` and `use_power`.
+- Both `Superman` and `WonderWoman` should inherit from `Superhero` and implement these methods.
+
+**Expected Output:**
+
+```
+True
+True
+```
