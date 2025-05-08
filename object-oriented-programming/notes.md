@@ -511,6 +511,185 @@ Multiple inheritance levels (grandparent → parent → child). Limit to 1-2 lev
 
 Child inherits from multiple parents. Python resolves methods left to right.
 
+---
+
+## Inheritance Basics
+
+Inheritance is a fundamental concept in object-oriented programming that allows you to create a new class (child/subclass) based on an existing class (parent/superclass). The child class inherits properties and methods from the parent class, enabling code reuse and extension.
+
+Inheritance lets you create new classes based on existing ones. Instead of modifying an existing class, you reuse its code and only write the differences in the new class.
+
+**Example:**
+
+```python
+class Superhero:
+    def __init__(self, name: str, power: str):
+        self.name = name
+        self.power = power
+
+class Avenger(Superhero):
+    def fly(self) -> None:
+        print(f"{self.name} can fly using {self.power}")
+
+iron_man = Avenger("Iron Man", "repulsor beams")
+iron_man.fly()  # Iron Man can fly using repulsor beams
+```
+
+- `Avenger` inherits from `Superhero`, gaining its properties and methods.
+- The `fly` method is specific to `Avenger`.
+
+**Syntax:**
+
+```python
+class ChildClass(ParentClass):
+    # Child class code here
+```
+
+When you create an instance of a child class, the parent class's constructor is called automatically. That's why you can pass arguments to `Avenger` even though they're not defined in its constructor.
+
+#### Challenge
+
+Given a parent class `SmartDevice` with properties `name` and `is_on`, create a child class `SmartLight` that inherits from `SmartDevice` and has methods `turn_on` and `turn_off`.
+
+- `turn_on` should print `{self.name} is turned on`
+- `turn_off` should print `{self.name} is turned off`
+
+**Expected Output:**
+
+```
+Smart Light is turned on
+Smart Light is turned off
+```
+
+_Hint: Use `ChildClass(ParentClass)` syntax to inherit._
+
+---
+
+### Why create child classes and not just objects?
+
+You might think you could just add properties or methods to an object instead of creating a child class. But this quickly leads to messy code:
+
+**Without inheritance:**
+
+```python
+class Superhero:
+   def fight(self) -> None:
+       if self.type == "avenger":
+           print(f"{self.name} fights with advanced weapons!")
+       elif self.type == "street":
+           print(f"{self.name} fights with martial arts!")
+       elif self.type == "magic":
+           print(f"{self.name} fights with spells!")
+       # More types = More if-elif statements...
+```
+
+**With inheritance:**
+
+```python
+class Avenger(Superhero):
+   def fight(self) -> None:
+       print(f"{self.name} fights with advanced weapons!")
+
+class StreetHero(Superhero):
+   def fight(self) -> None:
+       print(f"{self.name} fights with martial arts!")
+```
+
+Inheritance keeps code clean and organized by giving each type its own method, instead of using many if-elif statements.
+
+---
+
+## The `super()` Function
+
+`super()` is a built-in function that allows you to call methods from a parent class. It's useful when you want to extend, not replace, parent behavior.
+
+**Why use `super()`?**
+
+- Add extra initialization while keeping the parent's logic.
+- Enhance existing methods while maintaining core functionality.
+- Access parent properties while adding new ones.
+
+**Example:**
+
+```python
+class ParentClass:
+    def parent_method(self) -> None:
+        print("This is the parent class method")
+
+class ChildClass(ParentClass):
+    def child_method(self) -> None:
+        super().parent_method()
+        print("This is the child class method")
+```
+
+- `super().parent_method()` calls the parent class's method.
+
+**Syntax:**
+
+```python
+super().parent_method()   # Call parent class's instance method
+super().__init__()       # Call parent class constructor
+super().parent_property   # Access parent class property
+```
+
+---
+
+## Diamond Problem and Method Resolution Order (MRO)
+
+Multiple inheritance allows a class to inherit from more than one parent, but can lead to ambiguity known as the diamond problem.
+
+**Example:**
+
+```python
+class A:
+    def print_method(self) -> None:
+        print("A")
+
+class B(A):
+    def print_method(self) -> None:
+        print("B")
+
+class C(A):
+    def print_method(self) -> None:
+        print("C")
+
+class D(B, C):
+    pass
+
+d = D()
+d.print_method()  # Which method will be called?
+```
+
+This creates a diamond-shaped inheritance:
+
+```
+   A
+  / \
+ B   C
+  \ /
+   D
+```
+
+**How Python Resolves Methods**
+
+Python uses Method Resolution Order (MRO):
+
+1. Looks in the current class (`D`)
+2. Checks the first parent (`B`)
+3. Then the second parent (`C`)
+4. Finally, the base class (`A`)
+
+You can view the MRO with `__mro__`:
+
+```python
+print(D.__mro__)
+# Output: (<class '__main__.D'>, <class '__main__.B'>, <class '__main__.C'>, <class '__main__.A'>, <class 'object'>)
+```
+
+This ensures predictable and consistent method lookup in complex inheritance hierarchies.
+
+---
+
 ## Abstract Classes & Methods
 
 - Enforce a common interface without direct implementation.
